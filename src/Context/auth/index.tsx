@@ -6,7 +6,7 @@ export interface IAuthProps {
 
 
 export interface IAuthContext {
-    SignUp: ({ email, name, password }: ISignUp) => void
+    SignUp: ({ email, name, password, state }: ISignUp) => void
 
 }
 
@@ -21,6 +21,7 @@ export interface ISignUp {
     name: string;
     password: string;
     email: string;
+    state: string;
 }
 
 
@@ -29,7 +30,7 @@ const AuthContext = createContext({} as IAuthContext)
 export const AuthProvider = ({ children }: IAuthProps): JSX.Element => {
 
 
-    const SignUp = ({ email, name, password }: ISignUp) => {
+    const SignUp = ({ email, name, password, state }: ISignUp) => {
 
     }
 

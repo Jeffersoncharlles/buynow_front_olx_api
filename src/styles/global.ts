@@ -14,6 +14,7 @@ export const GlobalStyle = createGlobalStyle`
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background: var(--background);
+    font: 1rem;
 }
 
 a{
@@ -23,5 +24,17 @@ a{
 button{
   cursor: pointer;
 }
+
+@media (max-width:1080px) {
+        html {
+            font-size: 93.75%;
+        }
+    }
+
+@media (max-width:720px) {
+        html {
+            font-size: 87.5%;
+        }
+    }
 
 `
