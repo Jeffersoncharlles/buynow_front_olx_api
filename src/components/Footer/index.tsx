@@ -2,11 +2,11 @@ import {
     Container,
 } from './styles';
 
-export const Header = () => {
+export const Footer = () => {
 
     return (
         <Container>
-            <h1>header</h1>
+            <h1>footer</h1>
         </Container>
     );
 }

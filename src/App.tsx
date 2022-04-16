@@ -1,8 +1,14 @@
+import { Footer } from "./components/Footer"
+import { Header } from "./components/Header"
 import { Routers } from "./routers"
 
 function App() {
   return (
-    <Routers />
+    <>
+      <Header />
+      <Routers />
+      <Footer />
+    </>
   )
 }
 
