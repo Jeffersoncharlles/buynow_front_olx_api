@@ -1,15 +1,17 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { api } from "../../services/api";
-import { IAdSense, IAdSenseContext, IRegions } from "./types";
+import { IAdSense, IAdSenseContext, ICategories, IRegions } from "./types";
 
 
 export const AdSenseContext = createContext({} as IAdSenseContext)
 
 export const AdSenseProvider = ({ children }: IAdSense) => {
     const [regions, setRegions] = useState<IRegions[]>([])
+    const [categories, setCategories] = useState<ICategories[]>([])
 
     useEffect(() => {
         Region();
+        Category();
     }, [])
 
     const Region = async () => {
@@ -18,10 +20,16 @@ export const AdSenseProvider = ({ children }: IAdSense) => {
             setRegions(data)
         }
     }
+    const Category = async () => {
+        const { data } = await api.get<ICategories[]>('categories')
+        if (data) {
+            setCategories(data)
+        }
+    }
 
 
     return (
-        <AdSenseContext.Provider value={{ regions }}>
+        <AdSenseContext.Provider value={{ regions, categories }}>
             {children}
         </AdSenseContext.Provider>
     );
