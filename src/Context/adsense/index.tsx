@@ -39,7 +39,6 @@ export const AdSenseProvider = ({ children }: IAdSense) => {
                 }
             }
             const { data } = await api.get(`ad`)
-            console.log(data)
             if (data) {
                 setAdSenses(data.adsFormatted);
             }

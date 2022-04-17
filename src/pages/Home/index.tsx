@@ -11,8 +11,6 @@ import { CardItem } from '../../components/CardItem';
 export const Home = () => {
     const { regions, categories, adSenses, AdSenses } = useAdSense()
 
-    console.log(adSenses)
-
     return (
         <>
             <SearchContainer>
