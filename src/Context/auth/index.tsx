@@ -29,7 +29,6 @@ export const AuthProvider = ({ children }: IAuthProps): JSX.Element => {
             const { token, id } = data
             setUser({ token, name, email, id })
             Cookies.set('token', JSON.stringify(data));
-
         } catch (error: any) {
             return error.response.data
         }
@@ -63,7 +62,6 @@ export const AuthProvider = ({ children }: IAuthProps): JSX.Element => {
                 SignUp, SignIn, validateCookie, Logout,
                 user, isAuthenticated
             }}
-
         >
             {children}
         </AuthContext.Provider>

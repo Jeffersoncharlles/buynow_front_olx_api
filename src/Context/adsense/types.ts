@@ -8,6 +8,8 @@ export interface IAdSense {
 export interface IAdSenseContext {
     regions: IRegions[]
     categories: ICategories[]
+    adSenses: IAdsFormatted[]
+    AdSenses: () => Promise<void>
 }
 
 export interface IRegions {
@@ -21,4 +23,26 @@ export interface ICategories {
     slug: string;
     img: string;
     id: string;
+}
+
+export interface IAdSenses {
+    adsFormatted: IAdsFormatted[]
+    totalAds: number;
+}
+
+export interface IAdsFormatted {
+    id: string;
+    title: string;
+    price: number;
+    priceNegotiable: boolean;
+    image: string;
+}
+
+export interface IGetAds {
+    sort?: string;
+    offset?: number;
+    limit?: number;
+    q?: string;
+    cat?: string;
+    region?: string;
 }

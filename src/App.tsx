@@ -7,9 +7,7 @@ function App() {
   return (
     <>
       <Header />
-      <Container>
-        <Routers />
-      </Container>
+      <Routers />
       <Footer />
     </>
   )
