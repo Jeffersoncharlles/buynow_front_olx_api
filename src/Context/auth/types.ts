@@ -7,7 +7,7 @@ export interface IAuthProps {
 
 export interface IAuthContext {
     SignUp: ({ email, name, password, state }: ISignUp) => void
-    SignIn: ({ email, password }: ISignIn) => void;
+    SignIn: ({ email, password, remember }: ISignIn) => Promise<any>;
     validateCookie: () => void;
     user: User | undefined;
     isAuthenticated: boolean;
@@ -29,4 +29,5 @@ export interface ISignUp {
 export interface ISignIn {
     password: string;
     email: string;
+    remember: boolean;
 }

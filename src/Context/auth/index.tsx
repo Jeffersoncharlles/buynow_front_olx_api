@@ -13,11 +13,14 @@ export const AuthProvider = ({ children }: IAuthProps): JSX.Element => {
     const isAuthenticated = !!user
 
     useEffect(() => {
-
+        validateCookie();
     }, [])
 
     const validateCookie = () => {
         const token = Cookies.get('token')
+        if (token) {
+            setUser(JSON.parse(token))
+        }
         return (token) ? true : false
     }
 
@@ -26,11 +29,30 @@ export const AuthProvider = ({ children }: IAuthProps): JSX.Element => {
 
     }
 
-    const SignIn = ({ email, password, }: ISignIn) => {
-        const response = api.post<AxiosPromise<User>>('/user/session', { email, password })
+    const SignIn = async ({ email, password, remember }: ISignIn) => {
 
-        console.log(response)
+        try {
+            const { data } = await api.post('/user/session', { email, password })
+            const { token, name, id } = data
+            if (!token) {
+                return data.error
+            }
 
+            setUser({
+                token,
+                name,
+                email,
+                id
+            })
+
+            if (remember) {
+                Cookies.set('token', token, { expires: 999 });
+            }
+            Cookies.set('token', JSON.stringify(data),);
+
+        } catch (error: any) {
+            return error.response.data
+        }
     }
 
 

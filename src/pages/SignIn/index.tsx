@@ -1,4 +1,7 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../Context/auth';
+import * as yup from 'yup'
 import {
     Container,
     Title,
@@ -7,20 +10,48 @@ import {
     Check,
 } from './styles';
 
+interface IResponse {
+    error?: string;
+    isAuthenticated: boolean;
+}
+
+const schema = yup.object().shape({
+    email: yup.string().email().required(),
+    password: yup.string().min(6).required(),
+})
+
 export const SignIn = () => {
+    const { SignIn } = useAuth()
+    const navigate = useNavigate()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [remember, setRemember] = useState(false)
+    const [error, setError] = useState('')
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        const data: IResponse = await SignIn({ email, password, remember })
+        if (data?.error) {
+            setError(data?.error)
+            setEmail('')
+            setPassword('')
+            return;
+        }
+        navigate('/')
+    }
 
     return (
         <Container>
-            {/* <Title>Login</Title> */}
-            <form>
+            <p>{error}</p>
+            <form onSubmit={handleSubmit}>
                 <Email>
                     <label htmlFor="email">Email</label>
                     <input
                         type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
+                        required
                     />
                 </Email>
                 <Password className="">
@@ -29,6 +60,7 @@ export const SignIn = () => {
                         type="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
+                        required
                     />
                 </Password>
 
@@ -38,6 +70,8 @@ export const SignIn = () => {
                     </label>
                     <input
                         type="checkbox"
+                        checked={remember}
+                        onChange={() => setRemember(!remember)}
                     />
                 </Check>
                 <label htmlFor="SingIn">

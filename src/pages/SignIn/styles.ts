@@ -4,7 +4,14 @@ export const Container = styled.main`
     display: flex;
     justify-content: center;
     text-align: center;
-    color: #9e7682;
+    align-items: center;
+    height: 43rem;//700px
+    color: #6e5425;
+    flex-direction: column;
+
+    p{
+        color: #ff0034;
+    }
     
 
     form {
@@ -19,7 +26,7 @@ export const Container = styled.main`
 
         label {
             button{
-                color: #9e7682;
+                color: #6e5425;
                 background: #edcb96;
                 padding: 10px 30px;
                 border: 0;
@@ -92,6 +99,7 @@ export const Check = styled.div`
     }
 
     input{
+        
         margin-top: 15px;
         cursor: pointer;
     }
