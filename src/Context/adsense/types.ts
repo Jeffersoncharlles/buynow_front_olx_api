@@ -10,6 +10,6 @@ export interface IAdSenseContext {
 }
 
 export interface IRegions {
-    id: string;
+    _id: string;
     name: string;
 }

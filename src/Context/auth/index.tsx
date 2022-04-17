@@ -23,9 +23,12 @@ export const AuthProvider = ({ children }: IAuthProps): JSX.Element => {
         return (token) ? true : false
     }
 
-    const SignUp = ({ email, name, password, state }: ISignUp) => {
-
+    const SignUp = async ({ email, name, password, state }: ISignUp) => {
         try {
+            const { data } = await api.post('/user/signup', { name, email, password, state })
+            const { token, id } = data
+            setUser({ token, name, email, id })
+            Cookies.set('token', JSON.stringify(data));
 
         } catch (error: any) {
             return error.response.data
