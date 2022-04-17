@@ -1,11 +1,18 @@
 import {
     Container,
 } from './styles';
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../Context/auth';
 
 export const Header = () => {
-    const { isAuthenticated } = useAuth()
+    const { isAuthenticated, Logout } = useAuth();
+
+
+    const handleLogout = () => {
+        Logout()
+        window.location.href = '/'
+        // navigation('/')
+    }
 
     return (
         <Container>
@@ -28,7 +35,7 @@ export const Header = () => {
                                     <Link to="/profile">Minha Conta</Link>
                                 </li>
                                 <li>
-                                    <Link to="/logout">Sair</Link>
+                                    <button onClick={() => handleLogout()}>Sair</button>
                                 </li>
                             </>
                         ) : (

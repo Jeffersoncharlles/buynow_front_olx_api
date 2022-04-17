@@ -62,6 +62,18 @@ border-bottom: 1px solid #ccc;
                         padding: 5px 10px;
                     }
                 }
+                button{
+                    color: #edcb96;
+                    font-size: 1.2rem;
+                    font-weight: 500;
+                    transition: ease filter 0.3s;
+                    background: none        ;
+                    border: 0;
+
+                    &:hover{
+                        filter: brightness(0.9);
+                    }
+                }
 
                 
             }

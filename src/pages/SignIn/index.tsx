@@ -16,8 +16,8 @@ interface IResponse {
 }
 
 const schema = yup.object().shape({
-    email: yup.string().email().required(),
-    password: yup.string().min(6).required(),
+    email: yup.string().email('E-mail deve ser válido').trim().required(),
+    password: yup.string().min(6, 'Senha deve ser maior que ${min} caracteres').trim().required(),
 })
 
 export const SignIn = () => {
@@ -30,15 +30,19 @@ export const SignIn = () => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        await schema.validate({ email, password }).then(async ({ email, password }) => {
+            const data: IResponse = await SignIn({ email, password, remember })
+            if (data?.error) {
+                setError(data?.error)
+                setEmail('')
+                setPassword('')
+                return;
+            }
+            navigate('/')
 
-        const data: IResponse = await SignIn({ email, password, remember })
-        if (data?.error) {
-            setError(data?.error)
-            setEmail('')
-            setPassword('')
-            return;
-        }
-        navigate('/')
+        }).catch((err) => {
+            setError(err.errors)
+        })
     }
 
     return (

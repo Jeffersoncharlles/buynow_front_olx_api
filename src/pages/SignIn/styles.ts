@@ -5,7 +5,8 @@ export const Container = styled.main`
     justify-content: center;
     text-align: center;
     align-items: center;
-    height: 43rem;//700px
+    /* height: 43rem;//700px */
+    height: 50vh;
     color: #6e5425;
     flex-direction: column;
 

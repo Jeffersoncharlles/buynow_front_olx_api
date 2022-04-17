@@ -1,6 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { api } from "../../services/api";
-import { AxiosPromise } from 'axios'
 import { IAuthContext, IAuthProps, ISignIn, ISignUp, User } from "./types";
 import Cookies from 'js-cookie'
 
@@ -24,40 +23,45 @@ export const AuthProvider = ({ children }: IAuthProps): JSX.Element => {
         return (token) ? true : false
     }
 
-
     const SignUp = ({ email, name, password, state }: ISignUp) => {
 
-    }
-
-    const SignIn = async ({ email, password, remember }: ISignIn) => {
-
         try {
-            const { data } = await api.post('/user/session', { email, password })
-            const { token, name, id } = data
-            if (!token) {
-                return data.error
-            }
-
-            setUser({
-                token,
-                name,
-                email,
-                id
-            })
-
-            if (remember) {
-                Cookies.set('token', token, { expires: 999 });
-            }
-            Cookies.set('token', JSON.stringify(data),);
 
         } catch (error: any) {
             return error.response.data
         }
     }
 
+    const SignIn = async ({ email, password, remember }: ISignIn) => {
+        try {
+            const { data } = await api.post('/user/session', { email, password })
+            const { token, name, id } = data
+            if (!token) {
+                return data.error
+            }
+            setUser({ token, name, email, id })
+            if (remember) {
+                Cookies.set('token', token, { expires: 60 * 60 * 24 * 30 });// 30 days
+            }
+            Cookies.set('token', JSON.stringify(data));
+
+        } catch (error: any) {
+            return error.response.data
+        }
+    }
+
+    const Logout = async () => {
+        Cookies.remove('token')
+    }
 
     return (
-        <AuthContext.Provider value={{ SignUp, SignIn, validateCookie, user, isAuthenticated }}>
+        <AuthContext.Provider
+            value={{
+                SignUp, SignIn, validateCookie, Logout,
+                user, isAuthenticated
+            }}
+
+        >
             {children}
         </AuthContext.Provider>
     )
