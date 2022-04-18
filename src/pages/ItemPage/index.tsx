@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { useAdSense } from '../../Context/adsense';
 import {
     Container,
     Box,
@@ -8,10 +9,24 @@ import {
 } from './styles';
 
 export const ItemPage = () => {
+    const { AdItem, adItem, loading } = useAdSense()
     const { id } = useParams()
 
-    const [loading, setLoading] = useState(true)
-    const [adInfo, setInfo] = useState([]);
+
+
+    useEffect(() => {
+        if (id) {
+            AdItem(String(id))
+        }
+    }, [])
+
+    const formatDated = (date: number) => {
+        return new Date(date).toLocaleDateString('pt-BR', {
+            day: '2-digit',
+            month: 'long',
+            year: 'numeric'
+        })
+    }
 
     return (
         <Container>
@@ -22,10 +37,15 @@ export const ItemPage = () => {
                     </div>
                     <div className="adInfos">
                         <div className="adName">
+                            <h2>{adItem?.title}</h2>
+                            <small>Criado em {formatDated(Number(adItem?.createdAt))}</small>
                             {loading && <SkeletonFake height={20} />}
                         </div>
                         <div className="adDescription">
+                            <p>{adItem?.description}</p>
                             {loading && <SkeletonFake height={100} />}
+                            <hr />
+                            <small>Visualizações:{adItem?.views}</small>
                         </div>
                     </div>
                 </Box>

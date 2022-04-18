@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { api } from "../../services/api";
-import { IAdsFormatted, IGetAds } from "./types";
+import { IData, IAdSenseItem, IAdsFormatted, IGetAds } from "./types";
 import { IAdSense, IAdSenseContext, IAdSenses, ICategories, IRegions } from "./types";
 
 
@@ -10,6 +10,8 @@ export const AdSenseProvider = ({ children }: IAdSense) => {
     const [regions, setRegions] = useState<IRegions[]>([])
     const [categories, setCategories] = useState<ICategories[]>([])
     const [adSenses, setAdSenses] = useState<IAdsFormatted[]>([])
+    const [adItem, setAdItem] = useState<IData>()
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         Region();
@@ -47,12 +49,26 @@ export const AdSenseProvider = ({ children }: IAdSense) => {
         }
     }
 
+    const AdItem = async (id: string) => {
+        try {
+            const { data } = await api.get(`ad/${id}`)
+            if (data.data) {
+
+                setAdItem(data.data)
+                setLoading(false)
+                // console.log(adItem)
+            }
+        } catch (error) {
+
+        }
+    }
+
 
     return (
         <AdSenseContext.Provider
             value={{
-                regions, categories, adSenses,
-                AdSenses
+                regions, categories, adSenses, adItem, loading,
+                AdSenses, AdItem
 
             }}
         >
