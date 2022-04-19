@@ -5,7 +5,11 @@ export const Container = styled.div`
     margin: 20px auto ;
     display: flex;
     justify-content: center;
-    
+    align-items: center;
+    display: flex;
+    color: #6e5425;
+    flex-direction: column;
+    font-weight: 600;
 
     form {
         display: flex;
@@ -17,6 +21,8 @@ export const Container = styled.div`
         max-width: 500px;
         
         input,select ,textarea{
+            margin-bottom: 10px;
+            margin-top: 2px;
             width: 100%;
             font-size: 1rem;
             padding: 5px;
@@ -59,6 +65,7 @@ export const PriceNegotiable = styled.div`
     flex-direction: row;
     align-items: center;
     margin-bottom: 10px;
+    margin-top: 10px;
     
     
      label{

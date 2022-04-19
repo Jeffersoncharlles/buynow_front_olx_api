@@ -14,6 +14,7 @@ export interface IAdSenseContext {
     adItem: IData | undefined;
     otherDatas: OtherData[]
     loading: boolean;
+    createdAd: (params: any) => Promise<void>
 }
 
 export interface IRegions {
@@ -90,7 +91,10 @@ export interface IData {
     createdAt: number;
     updatedAt: number;
     __v: number;
-    imagesUrl: string[];
+    imagesUrl: {
+        original: string;
+        thumbnail: string;
+    }[];
     id: string;
 }
 

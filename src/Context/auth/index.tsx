@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }: IAuthProps): JSX.Element => {
     const validateCookie = () => {
         const token = Cookies.get('token')
         if (token) {
-            setUser(JSON.parse(token))
+            setUser(JSON.parse(String(token)))
         }
         return (token) ? true : false
     }

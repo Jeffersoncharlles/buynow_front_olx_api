@@ -31,13 +31,6 @@ export const ItemPage = () => {
             year: 'numeric'
         })
     }
-    console.log(adItem?.imagesUrl)
-
-    const ImagesSlides = adItem?.imagesUrl.map((item, index) => {
-        const data = { original: item, thumbnail: item }
-        return data
-    })
-
     const FormattedPrice = (price: number) => {
         return new Intl.NumberFormat('pt-BR', {
             style: 'currency',
@@ -45,9 +38,6 @@ export const ItemPage = () => {
             minimumFractionDigits: 2
         }).format(price)
     }
-
-
-    console.log(ImagesSlides)
 
     return (
         <>
@@ -70,7 +60,7 @@ export const ItemPage = () => {
                                 <Slide>
                                     {adItem.imagesUrl.map((item, index) => (
                                         <div key={index} className="each-slide">
-                                            <img src={item} alt="" />
+                                            <img src={item?.original} alt="" />
                                         </div>
                                     ))}
                                 </Slide>

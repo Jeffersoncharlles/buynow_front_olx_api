@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { api } from "../../services/api";
 import { IData, IAdsFormatted, OtherData } from "./types";
 import { IAdSense, IAdSenseContext, ICategories, IRegions } from "./types";
@@ -7,6 +8,7 @@ import { IAdSense, IAdSenseContext, ICategories, IRegions } from "./types";
 export const AdSenseContext = createContext({} as IAdSenseContext)
 
 export const AdSenseProvider = ({ children }: IAdSense) => {
+    const navigate = useNavigate()
     const [regions, setRegions] = useState<IRegions[]>([])
     const [categories, setCategories] = useState<ICategories[]>([])
     const [ads, setAds] = useState<IAdsFormatted[]>([])
@@ -56,7 +58,7 @@ export const AdSenseProvider = ({ children }: IAdSense) => {
 
     const AdItem = async (id: string, other?: boolean) => {
         try {
-            const { data } = await api.get(`ad/${id}`)
+            const { data } = await api.get(`ad/${id}/${other}`)
             if (data.data) {
                 setAdItem(data.data)
                 setOtherDatas(data.otherDatas)
@@ -66,12 +68,24 @@ export const AdSenseProvider = ({ children }: IAdSense) => {
         }
     }
 
+    const createdAd = async (params: any) => {
+        try {
+
+            const { data } = await api.post('/ad/add', params)
+            if (data) {
+                navigate(`/ad/${data._id}`)
+            }
+        } catch (error) {
+
+        }
+    }
+
 
     return (
         <AdSenseContext.Provider
             value={{
                 regions, categories, ads, adItem, loading, otherDatas,
-                Ads, AdItem
+                Ads, AdItem, createdAd
             }}
         >
             {children}

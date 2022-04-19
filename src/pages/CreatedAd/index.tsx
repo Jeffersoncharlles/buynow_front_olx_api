@@ -1,5 +1,9 @@
 import { useRef, useState } from 'react';
 import { useAdSense } from '../../Context/adsense';
+import { useNavigate } from 'react-router-dom'
+import MaskedInput from 'react-text-mask'
+import createNumberMask from 'text-mask-addons/dist/createNumberMask'
+import * as yup from 'yup'
 import {
     Container,
     Title,
@@ -10,20 +14,57 @@ import {
     Imagens,
 } from './styles';
 
+const schema = yup.object().shape({
+    title: yup.string().trim().required(),
+    category: yup.string().trim().required(),
+    price: yup.string().min(4)
+})
+
 export const CreatedAd = () => {
-    const { categories } = useAdSense()
+
+    const { categories, createdAd } = useAdSense()
     const [title, setTitle] = useState('')
     const [category, setCategory] = useState('')
     const [price, setPrice] = useState('')
     const [priceNegotiable, setPriceNegotiable] = useState(false)
     const [description, setDescription] = useState('')
+    const [error, setError] = useState('')
 
     const fileField: any = useRef();
 
+    const priceMaskBR = createNumberMask({
+        prefix: 'R$ ',
+        includeThousandsSeparator: true,//incluir separador de milhares
+        thousandsSeparatorSymbol: '.',
+        allowDecimal: true,
+        decimalSymbol: ','
+    })
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        await schema.validate({ title, category, price }).then(async ({ title, category, price }) => {
+            setError('')
+            const formData = new FormData()
+            formData.append('title', title)
+            formData.append('price', String(price))
+            formData.append('priceNegotiable', String(priceNegotiable))
+            formData.append('categoryId', category)
+            formData.append('description', description)
+
+            if (fileField.current.files.length > 0) {
+                for (let i = 0; i < fileField.current.files.length; i++) {
+                    formData.append('img', fileField.current.files[i])
+                }
+            }
+            createdAd(formData)
+        }).catch((err) => {
+            setError(err.errors)
+        })
+    }
+
     return (
         <Container>
-            {/* <p>{error}</p> */}
-            <form>
+            <p>{error}</p>
+            <form onSubmit={handleSubmit}>
                 <Title >
                     <label htmlFor="titulo">Titulo</label>
                     <input
@@ -48,7 +89,13 @@ export const CreatedAd = () => {
                 </Category>
                 <Price>
                     <label htmlFor="Preço">Preço</label>
-
+                    <MaskedInput
+                        mask={priceMaskBR}
+                        placeholder="R$"
+                        disabled={priceNegotiable}
+                        value={price}
+                        onChange={(e) => setPrice(e.target.value)}
+                    />
                 </Price>
                 <PriceNegotiable>
                     <label htmlFor="Preço Negociável">Preço Negociável</label>
@@ -56,7 +103,6 @@ export const CreatedAd = () => {
                         type="checkbox"
                         checked={priceNegotiable}
                         onChange={e => setPriceNegotiable(!priceNegotiable)}
-                        required
                     />
                 </PriceNegotiable>
                 <Description >

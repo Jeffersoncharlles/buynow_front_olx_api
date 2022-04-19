@@ -3,6 +3,7 @@ import { useAuth } from "../Context/auth";
 
 type Props = {
     children: JSX.Element
+    private?: boolean
 }
 
 export const RequireAuth = ({ children, ...rest }: Props) => {
