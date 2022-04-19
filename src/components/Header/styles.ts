@@ -19,7 +19,7 @@ border-bottom: 1px solid #ccc;
             transition: ease filter 0.3s;
 
              span{
-                color: #edcb96;
+                color: #8d7140;
             }
 
             &:hover{
@@ -46,7 +46,7 @@ border-bottom: 1px solid #ccc;
                 align-items: center;
                 
                 a {
-                    color: #edcb96;
+                    color: #8d7140;
                     font-size: 1.2rem;
                     font-weight: 500;
                     transition: ease filter 0.3s;
@@ -63,7 +63,7 @@ border-bottom: 1px solid #ccc;
                     }
                 }
                 button{
-                    color: #edcb96;
+                    color: #8d7140;
                     font-size: 1.2rem;
                     font-weight: 500;
                     transition: ease filter 0.3s;

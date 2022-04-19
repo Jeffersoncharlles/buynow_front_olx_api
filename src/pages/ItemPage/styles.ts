@@ -4,6 +4,20 @@ interface ISkeletonFake {
     height?: number
 }
 
+export const BreadCrumb = styled.nav`
+    max-width: 64rem;//1024px
+    margin: 20px auto ;
+    margin-top: 20px;
+    
+
+    a{
+        display: inline-block;
+        margin: 0 5px;
+        text-decoration: underline;
+        color: #ff8100;
+    }
+`;
+
 export const Container = styled.main`
     max-width: 64rem;//1024px
     margin: 20px auto ;
@@ -114,4 +128,17 @@ export const Box = styled.div`
 export const SkeletonFake = styled.div<ISkeletonFake>`
     background: #ddd;
     height:${({ height }) => height || 20}px;
+`;
+
+export const OtherContainer = styled.section`
+    max-width: 64rem;//1024px
+    margin: 20px auto ;
+    h2{
+        font-size: 1.2rem;
+    }
+
+    .list{
+        display: flex;  
+    }
+
 `;

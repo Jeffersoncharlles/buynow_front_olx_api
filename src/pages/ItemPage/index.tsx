@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { PhotoSlide } from '../../components/PhotoSlide';
 import 'react-slideshow-image/dist/styles.css'
 import { Slide } from 'react-slideshow-image'
@@ -8,11 +8,14 @@ import {
     Container,
     Box,
     SkeletonFake,
-
+    OtherContainer,
+    BreadCrumb,
 } from './styles';
+import { CardItem } from '../../components/CardItem';
+import { Card } from '../../components/Card';
 
 export const ItemPage = () => {
-    const { AdItem, adItem, loading } = useAdSense()
+    const { AdItem, adItem, otherDatas, loading } = useAdSense()
     const { id } = useParams()
 
     useEffect(() => {
@@ -47,67 +50,92 @@ export const ItemPage = () => {
     console.log(ImagesSlides)
 
     return (
-        <Container>
-            <div className="LeftSide">
-                <Box>
-                    <div className="adImage">
-                        {loading && <SkeletonFake height={300} />}
-                        {adItem?.imagesUrl &&
-                            <Slide>
-                                {adItem.imagesUrl.map((item, index) => (
-                                    <div key={index} className="each-slide">
-                                        <img src={item} alt="" />
-                                    </div>
-                                ))}
-                            </Slide>
-                        }
-                    </div>
-                    <div className="adInfos">
-                        <div className="adName">
-                            <h2>{adItem?.title}</h2>
-                            {adItem?.createdAt && (
-                                <small>Criado em {formatDated(Number(adItem?.createdAt))}</small>
-                            )}
-                            {loading && <SkeletonFake height={20} />}
+        <>
+            <BreadCrumb>
+                Voce está aqui:
+                <Link to='/'>Home</Link>
+                /
+                <Link to={`/ads?region=${adItem?.stateId._id}`}>{adItem?.stateId.name}</Link>
+                /
+                <Link to={`/ads?region=${adItem?.categoryId.slug}`}>{adItem?.categoryId.name}</Link>
+                /
+                <Link to={`/ad/${adItem?._id}`}>{adItem?.title}</Link>
+            </BreadCrumb>
+            <Container>
+                <div className="LeftSide">
+                    <Box>
+                        <div className="adImage">
+                            {loading && <SkeletonFake height={300} />}
+                            {adItem?.imagesUrl &&
+                                <Slide>
+                                    {adItem.imagesUrl.map((item, index) => (
+                                        <div key={index} className="each-slide">
+                                            <img src={item} alt="" />
+                                        </div>
+                                    ))}
+                                </Slide>
+                            }
                         </div>
-                        <div className="adDescription">
-                            <p>{adItem?.description}</p>
-                            {loading && <SkeletonFake height={100} />}
-                            <hr />
-                            {adItem?.views && (
-                                <small>Visualizações:{Number(adItem?.views)}</small>
-                            )}
+                        <div className="adInfos">
+                            <div className="adName">
+                                <h2>{adItem?.title}</h2>
+                                {adItem?.createdAt && (
+                                    <small>Criado em {formatDated(Number(adItem?.createdAt))}</small>
+                                )}
+                                {loading && <SkeletonFake height={20} />}
+                            </div>
+                            <div className="adDescription">
+                                <p>{adItem?.description}</p>
+                                {loading && <SkeletonFake height={100} />}
+                                <hr />
+                                {adItem?.views && (
+                                    <small>Visualizações:{Number(adItem?.views)}</small>
+                                )}
 
+                            </div>
                         </div>
-                    </div>
-                </Box>
-            </div>
-            <div className="RightSide">
-                <Box className='padding'>
-                    {loading && <SkeletonFake height={40} />}
-                    {adItem?.priceNegotiable && (
-                        "Preço Negociável"
+                    </Box>
+                </div>
+                <div className="RightSide">
+                    <Box className='padding'>
+                        {loading && <SkeletonFake height={40} />}
+                        {adItem?.priceNegotiable && (
+                            "Preço Negociável"
+                        )}
+                        {!adItem?.priceNegotiable && adItem?.price && (
+                            <div className="price">
+                                Preço: <span>{FormattedPrice(Number(adItem?.price))}</span>
+                            </div>
+                        )}
+                    </Box>
+                    {adItem?.userId && (
+                        <>
+                            <a href={`mailto:${adItem.userId.email}`} target="_blank">Fale com o vendedor</a>
+                            <Box className='padding createdBy'>
+                                {loading && <SkeletonFake height={50} />}
+                                <strong>{adItem.userId.name}</strong>
+                                <small>E-mail:{adItem.userId.email}</small>
+                                <small>Region: {adItem.stateId.name}</small>
+
+                            </Box>
+                        </>
                     )}
-                    {!adItem?.priceNegotiable && adItem?.price && (
-                        <div className="price">
-                            Preço: <span>{FormattedPrice(Number(adItem?.price))}</span>
-                        </div>
-                    )}
-                </Box>
-                {adItem?.userId && (
+                </div>
+
+
+            </Container>
+            <OtherContainer>
+                {otherDatas && (
                     <>
-                        <a href={`mailto:${adItem.userId.email}`} target="_blank">Fale com o vendedor</a>
-                        <Box className='padding createdBy'>
-                            {loading && <SkeletonFake height={50} />}
-                            <strong>{adItem.userId.name}</strong>
-                            <small>E-mail:{adItem.userId.email}</small>
-                            <small>Region: {adItem.stateId.name}</small>
-
-                        </Box>
+                        <h2>Outras ofertas do vendedor</h2>
+                        <div className="list">
+                            {otherDatas.map((item, index) =>
+                                <Card key={String(index)} data={item} />
+                            )}
+                        </div>
                     </>
                 )}
-
-            </div>
-        </Container>
+            </OtherContainer>
+        </>
     );
 }

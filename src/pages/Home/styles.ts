@@ -39,7 +39,7 @@ export const SearchContainer = styled.section`
 `;
 
 export const SearchBox = styled.div`
-    background: #edcb96;
+    background: #8d7140;
         padding: 20px 15px;
         border-radius: 4px;
         box-shadow: 1px 1px 1px 0.3px rgba(0,0,0,0.2);
