@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { api } from "../../services/api";
-import { IData, IAdSenseItem, IAdsFormatted, IGetAds } from "./types";
-import { IAdSense, IAdSenseContext, IAdSenses, ICategories, IRegions } from "./types";
+import { IData, IAdsFormatted, OtherData } from "./types";
+import { IAdSense, IAdSenseContext, ICategories, IRegions } from "./types";
 
 
 export const AdSenseContext = createContext({} as IAdSenseContext)
@@ -9,15 +9,20 @@ export const AdSenseContext = createContext({} as IAdSenseContext)
 export const AdSenseProvider = ({ children }: IAdSense) => {
     const [regions, setRegions] = useState<IRegions[]>([])
     const [categories, setCategories] = useState<ICategories[]>([])
-    const [adSenses, setAdSenses] = useState<IAdsFormatted[]>([])
+    const [ads, setAds] = useState<IAdsFormatted[]>([])
     const [adItem, setAdItem] = useState<IData>()
+    const [otherDatas, setOtherDatas] = useState<OtherData[]>([])
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         Region();
         Category();
-        AdSenses();
+        Ads();
     }, [])
+
+    useEffect(() => {
+        Ads();
+    }, [adItem])
 
     const Region = async () => {
         const { data } = await api.get<IRegions[]>('states')
@@ -32,7 +37,7 @@ export const AdSenseProvider = ({ children }: IAdSense) => {
         }
     }
 
-    const AdSenses = async () => {
+    const Ads = async () => {
         try {
             const query = {
                 params: {
@@ -40,26 +45,24 @@ export const AdSenseProvider = ({ children }: IAdSense) => {
                     limit: 8
                 }
             }
-            const { data } = await api.get(`ad`)
+            const { data } = await api.get(`ad`, query)
             if (data) {
-                setAdSenses(data.adsFormatted);
+                setAds(data.adsFormatted);
             }
         } catch (error) {
 
         }
     }
 
-    const AdItem = async (id: string) => {
+    const AdItem = async (id: string, other?: boolean) => {
         try {
             const { data } = await api.get(`ad/${id}`)
             if (data.data) {
-
                 setAdItem(data.data)
+                setOtherDatas(data.otherDatas)
                 setLoading(false)
-                // console.log(adItem)
             }
         } catch (error) {
-
         }
     }
 
@@ -67,9 +70,8 @@ export const AdSenseProvider = ({ children }: IAdSense) => {
     return (
         <AdSenseContext.Provider
             value={{
-                regions, categories, adSenses, adItem, loading,
-                AdSenses, AdItem
-
+                regions, categories, ads, adItem, loading, otherDatas,
+                Ads, AdItem
             }}
         >
             {children}

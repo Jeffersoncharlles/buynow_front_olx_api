@@ -8,10 +8,11 @@ export interface IAdSense {
 export interface IAdSenseContext {
     regions: IRegions[];
     categories: ICategories[];
-    adSenses: IAdsFormatted[];
-    AdSenses: () => Promise<void>;
+    ads: IAdsFormatted[];
+    Ads: () => Promise<void>;
     AdItem: (id: string) => Promise<void>;
     adItem: IData | undefined;
+    otherDatas: OtherData[]
     loading: boolean;
 }
 

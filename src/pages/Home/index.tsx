@@ -9,7 +9,7 @@ import {
 import { CardItem } from '../../components/CardItem';
 
 export const Home = () => {
-    const { regions, categories, adSenses, AdSenses } = useAdSense()
+    const { regions, categories, ads, } = useAdSense()
 
     return (
         <>
@@ -45,7 +45,7 @@ export const Home = () => {
             <Container>
                 <h2>Anúncios Recentes</h2>
                 <div className="list">
-                    {adSenses.map((item, index) => (
+                    {ads.map((item, index) => (
                         <CardItem key={index} data={item} />
                     ))}
                 </div>
