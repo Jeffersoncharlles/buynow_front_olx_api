@@ -20,7 +20,7 @@ export const Home = () => {
                         <form method='get' action='/ads'>
                             <input type="text" name='q' placeholder='search now' />
                             <select name="region">
-                                <option>Qualquer</option>
+                                <option></option>
                                 {regions.map((opt, index) => (
                                     <option key={index} value={opt.name}>{opt.name}</option>
                                 ))}

@@ -11,7 +11,7 @@ export const AuthProvider = ({ children }: IAuthProps): JSX.Element => {
 
     useEffect(() => {
         validateCookie();
-    }, [])
+    }, [user])
 
     const validateCookie = () => {
         const token = Cookies.get('token')

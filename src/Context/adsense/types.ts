@@ -12,6 +12,7 @@ export interface IAdSenseContext {
     adFilter: IAdsFormatted[];
     Ads: () => Promise<void>;
     AdsFilter: ({ q, category, region }: IFilter) => Promise<void>;
+    filterTotal: number
     AdItem: (id: string) => Promise<void>;
     adItem: IData | undefined;
     otherDatas: OtherData[]
@@ -122,4 +123,5 @@ export interface IFilter {
     q?: string;
     category?: string
     region?: string;
+    offset?: number;
 }

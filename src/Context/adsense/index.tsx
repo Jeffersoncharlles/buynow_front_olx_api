@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { number } from "yup";
 import { api } from "../../services/api";
 import { IData, IAdsFormatted, OtherData, IFilter } from "./types";
 import { IAdSense, IAdSenseContext, ICategories, IRegions } from "./types";
@@ -13,6 +14,7 @@ export const AdSenseProvider = ({ children }: IAdSense) => {
     const [ads, setAds] = useState<IAdsFormatted[]>([])
     const [adItem, setAdItem] = useState<IData>()
     const [adFilter, setAdFilter] = useState<IAdsFormatted[]>([])
+    const [filterTotal, setFilterTotal] = useState<number>(0)
     const [otherDatas, setOtherDatas] = useState<OtherData[]>([])
     const [loading, setLoading] = useState(true)
 
@@ -63,7 +65,7 @@ export const AdSenseProvider = ({ children }: IAdSense) => {
             const query = {
                 params: {
                     sort: 'desc',
-                    limit: 9,
+                    limit: 2,
                     q,
                     cat: category,
                     region
@@ -73,6 +75,8 @@ export const AdSenseProvider = ({ children }: IAdSense) => {
             const { data } = await api.get(`ad`, query)
             if (data) {
                 setAdFilter(data.adsFormatted);
+                setFilterTotal(data.totalAds)
+                setLoading(false)
             }
         } catch (error) {
 
@@ -107,7 +111,7 @@ export const AdSenseProvider = ({ children }: IAdSense) => {
     return (
         <AdSenseContext.Provider
             value={{
-                regions, categories, ads, adItem, loading, otherDatas, adFilter,
+                regions, categories, ads, adItem, loading, otherDatas, adFilter, filterTotal,
                 Ads, AdItem, createdAd, AdsFilter
             }}
         >

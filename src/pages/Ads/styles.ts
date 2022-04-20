@@ -64,6 +64,38 @@ export const RightSide = styled.section`
         font-size: 1.1rem;
     }
 
+    >p{
+        padding: 30px;
+        text-align: center;
+    }
+
+    div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 10px 0;
+        p{
+            width: 30px;
+            height: 30px;
+            border: 1px solid #Ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            margin-right: 4px;
+
+            &:hover{
+                filter: brightness(0.9);
+            }
+
+            &.active{
+                background: #ccc;
+            }
+        }
+
+        
+    }
+
     article{
         display: flex;
         flex-wrap: wrap;
