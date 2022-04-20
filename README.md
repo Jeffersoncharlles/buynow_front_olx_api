@@ -38,4 +38,3 @@ buy now is front end  project olx api created for me
   <a href='https://www.linkedin.com/in/jeffersoncharlles/'>Get in touch!</a>
 </div>
 ## License
-

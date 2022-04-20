@@ -2,6 +2,7 @@
     "name": "buynow",
     "private": true,
     "version": "0.0.0",
+    "homepage": "buynow_front_olx_api",
     "scripts": {
         "dev": "vite --host",
         "build": "tsc && vite build",
