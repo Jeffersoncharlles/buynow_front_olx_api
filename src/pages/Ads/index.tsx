@@ -1,15 +1,17 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { CardItem } from '../../components/CardItem';
 import { useAdSense } from '../../Context/adsense';
 import {
     Container,
     LeftSide,
     RightSide,
 } from './styles';
-
+let time = 0;
 export const Ads = () => {
-    const { categories, regions, ads, Ads } = useAdSense()
+    const { categories, regions, AdsFilter, adFilter } = useAdSense()
     const navigate = useNavigate()
+
 
     const useQueryString = () => {
         return new URLSearchParams(useLocation().search)
@@ -22,6 +24,7 @@ export const Ads = () => {
     const [q, setQ] = useState(SearchQ);
     const [category, setCategory] = useState(SearchCategory);
     const [region, setRegion] = useState(SearchRegion)
+    const [resultOpacity, setResultOpacity] = useState(1)
 
     useEffect(() => {
         let queryString: string[] = []
@@ -31,11 +34,19 @@ export const Ads = () => {
 
         navigate(`?${queryString.join('&')}`, { replace: true })
         //mudar a url 
+
+        if (time > 0) {
+            clearTimeout(time)
+        }
+        time = setTimeout(async () => {
+            await AdsFilter({ q, category, region })
+            setResultOpacity(1)
+        }, 1000)
+        setResultOpacity(0.2);
+
     }, [q, category, region])
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 
-    }
 
     return (
         <Container>
@@ -46,7 +57,6 @@ export const Ads = () => {
                         name='q'
                         value={q}
                         onChange={e => setQ(e.target.value)}
-                        // value={q}
                         placeholder='Search'
                     />
                     <label htmlFor="Region">Região</label>
@@ -69,7 +79,12 @@ export const Ads = () => {
                 </form>
             </LeftSide>
             <RightSide >
-
+                <h2>Resultados</h2>
+                <article style={{ opacity: resultOpacity }}>
+                    {adFilter.map((item) => (
+                        <CardItem key={item.id} data={item} />
+                    ))}
+                </article>
             </RightSide>
 
         </Container>

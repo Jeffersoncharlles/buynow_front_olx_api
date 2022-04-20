@@ -58,4 +58,18 @@ export const LeftSide = styled.section`
 `;
 export const RightSide = styled.section`
     flex: 1;
+
+    h2{
+        margin-top:  0;
+        font-size: 1.1rem;
+    }
+
+    article{
+        display: flex;
+        flex-wrap: wrap;
+
+        article{
+            width: 25%;
+        }
+    }
 `;

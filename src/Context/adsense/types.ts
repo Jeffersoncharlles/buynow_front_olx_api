@@ -9,7 +9,9 @@ export interface IAdSenseContext {
     regions: IRegions[];
     categories: ICategories[];
     ads: IAdsFormatted[];
+    adFilter: IAdsFormatted[];
     Ads: () => Promise<void>;
+    AdsFilter: ({ q, category, region }: IFilter) => Promise<void>;
     AdItem: (id: string) => Promise<void>;
     adItem: IData | undefined;
     otherDatas: OtherData[]
@@ -113,4 +115,11 @@ export interface OtherData {
 export interface IAdSenseItem {
     data: IData;
     otherDatas: OtherData[];
+}
+
+
+export interface IFilter {
+    q?: string;
+    category?: string
+    region?: string;
 }

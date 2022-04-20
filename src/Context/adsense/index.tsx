@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { api } from "../../services/api";
-import { IData, IAdsFormatted, OtherData } from "./types";
+import { IData, IAdsFormatted, OtherData, IFilter } from "./types";
 import { IAdSense, IAdSenseContext, ICategories, IRegions } from "./types";
 
 export const AdSenseContext = createContext({} as IAdSenseContext)
@@ -12,6 +12,7 @@ export const AdSenseProvider = ({ children }: IAdSense) => {
     const [categories, setCategories] = useState<ICategories[]>([])
     const [ads, setAds] = useState<IAdsFormatted[]>([])
     const [adItem, setAdItem] = useState<IData>()
+    const [adFilter, setAdFilter] = useState<IAdsFormatted[]>([])
     const [otherDatas, setOtherDatas] = useState<OtherData[]>([])
     const [loading, setLoading] = useState(true)
 
@@ -23,6 +24,7 @@ export const AdSenseProvider = ({ children }: IAdSense) => {
 
     useEffect(() => {
         Ads();
+        AdsFilter({})
     }, [adItem])
 
     const Region = async () => {
@@ -43,9 +45,10 @@ export const AdSenseProvider = ({ children }: IAdSense) => {
             const query = {
                 params: {
                     sort: 'desc',
-                    limit: 8
+                    limit: 8,
                 }
             }
+
             const { data } = await api.get(`ad`, query)
             if (data) {
                 setAds(data.adsFormatted);
@@ -54,6 +57,28 @@ export const AdSenseProvider = ({ children }: IAdSense) => {
 
         }
     }
+
+    const AdsFilter = async ({ q, category, region }: IFilter) => {
+        try {
+            const query = {
+                params: {
+                    sort: 'desc',
+                    limit: 9,
+                    q,
+                    cat: category,
+                    region
+                }
+            }
+
+            const { data } = await api.get(`ad`, query)
+            if (data) {
+                setAdFilter(data.adsFormatted);
+            }
+        } catch (error) {
+
+        }
+    }
+
 
     const AdItem = async (id: string, other?: boolean) => {
         try {
@@ -82,8 +107,8 @@ export const AdSenseProvider = ({ children }: IAdSense) => {
     return (
         <AdSenseContext.Provider
             value={{
-                regions, categories, ads, adItem, loading, otherDatas,
-                Ads, AdItem, createdAd
+                regions, categories, ads, adItem, loading, otherDatas, adFilter,
+                Ads, AdItem, createdAd, AdsFilter
             }}
         >
             {children}
