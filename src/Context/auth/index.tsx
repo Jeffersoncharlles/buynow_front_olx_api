@@ -3,13 +3,11 @@ import { api } from "../../services/api";
 import { IAuthContext, IAuthProps, ISignIn, ISignUp, User } from "./types";
 import Cookies from 'js-cookie'
 
-
-
 const AuthContext = createContext({} as IAuthContext)
 
 export const AuthProvider = ({ children }: IAuthProps): JSX.Element => {
     const [user, setUser] = useState<User>()
-    const isAuthenticated = !!user
+    const isAuthenticated = !!user?.token
 
     useEffect(() => {
         validateCookie();
@@ -17,10 +15,15 @@ export const AuthProvider = ({ children }: IAuthProps): JSX.Element => {
 
     const validateCookie = () => {
         const token = Cookies.get('token')
+        let isUser
         if (token) {
-            setUser(JSON.parse(String(token)))
+            isUser = JSON.parse(String(token))
+            if (isUser?.token && user !== null) {
+                setUser(isUser)
+            }
+
         }
-        return (token) ? true : false
+        return (isUser !== null) ? true : false
     }
 
     const SignUp = async ({ email, name, password, state }: ISignUp) => {

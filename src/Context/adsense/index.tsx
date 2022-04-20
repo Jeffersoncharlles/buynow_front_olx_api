@@ -4,7 +4,6 @@ import { api } from "../../services/api";
 import { IData, IAdsFormatted, OtherData } from "./types";
 import { IAdSense, IAdSenseContext, ICategories, IRegions } from "./types";
 
-
 export const AdSenseContext = createContext({} as IAdSenseContext)
 
 export const AdSenseProvider = ({ children }: IAdSense) => {
@@ -70,7 +69,6 @@ export const AdSenseProvider = ({ children }: IAdSense) => {
 
     const createdAd = async (params: any) => {
         try {
-
             const { data } = await api.post('/ad/add', params)
             if (data) {
                 navigate(`/ad/${data._id}`)

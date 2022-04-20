@@ -38,7 +38,7 @@ export const Container = styled.main`
                 align-items: center;
                 justify-content: center;
                 background-size:cover;
-                height: 320px;
+                height: 300px;
             }
         }
 
