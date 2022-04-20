@@ -8,6 +8,7 @@ import { ItemPage } from '../pages/ItemPage';
 import { RequireAuth } from './RequireAuth';
 import { CreatedAd } from '../pages/CreatedAd';
 import { Ads } from '../pages/Ads';
+import { Profile } from '../pages/Profile';
 
 export const Routers = () => {
 
@@ -21,6 +22,11 @@ export const Routers = () => {
             <Route caseSensitive path='/post-an-ad' element={
                 <RequireAuth>
                     <CreatedAd />
+                </RequireAuth>
+            } />
+            <Route caseSensitive path='/profile' element={
+                <RequireAuth>
+                    <Profile />
                 </RequireAuth>
             } />
             <Route path='*' element={<NotFound />} />
