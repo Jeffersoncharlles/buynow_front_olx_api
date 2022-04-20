@@ -45,9 +45,9 @@ export const ItemPage = () => {
                 Voce está aqui:
                 <Link to='/'>Home</Link>
                 /
-                <Link to={`/ads?region=${adItem?.stateId._id}`}>{adItem?.stateId.name}</Link>
+                <Link to={`/ads?region=${adItem?.stateId.name}`}>{adItem?.stateId.name}</Link>
                 /
-                <Link to={`/ads?region=${adItem?.categoryId.slug}`}>{adItem?.categoryId.name}</Link>
+                <Link to={`/ads?region=${adItem?.stateId.name}&cat=${adItem?.categoryId.slug}`}>{adItem?.categoryId.name}</Link>
                 /
                 <Link to={`/ad/${adItem?._id}`}>{adItem?.title}</Link>
             </BreadCrumb>

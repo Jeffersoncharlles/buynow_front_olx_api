@@ -22,7 +22,7 @@ export const Home = () => {
                             <select name="region">
                                 <option>Qualquer</option>
                                 {regions.map((opt, index) => (
-                                    <option key={index} value={opt._id}>{opt.name}</option>
+                                    <option key={index} value={opt.name}>{opt.name}</option>
                                 ))}
                             </select>
                             <button>Search</button>
