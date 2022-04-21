@@ -38,7 +38,7 @@ export const SignIn = () => {
                 setPassword('')
                 return;
             }
-            navigate('/')
+            navigate('/buynow_front_olx_api/')
 
         }).catch((err) => {
             setError(err.errors)

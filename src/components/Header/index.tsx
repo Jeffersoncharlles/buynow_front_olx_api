@@ -29,10 +29,10 @@ export const Header = () => {
                         {isAuthenticated ? (
                             <>
                                 <li>
-                                    <Link to="/post-an-ad" className='created'>Post um anúncio</Link>
+                                    <Link to="/buynow_front_olx_api/post-an-ad" className='created'>Post um anúncio</Link>
                                 </li>
                                 <li>
-                                    <Link to="/profile">Minha Conta</Link>
+                                    <Link to="/buynow_front_olx_api/profile">Minha Conta</Link>
                                 </li>
                                 <li>
                                     <button onClick={() => handleLogout()}>Sair</button>
@@ -41,13 +41,13 @@ export const Header = () => {
                         ) : (
                             <>
                                 <li>
-                                    <Link to="/signin">Login</Link>
+                                    <Link to="/buynow_front_olx_api/signin">Login</Link>
                                 </li>
                                 <li>
-                                    <Link to="/signup">Cadastrar</Link>
+                                    <Link to="/buynow_front_olx_api/signup">Cadastrar</Link>
                                 </li>
                                 <li>
-                                    <Link to="/signin" className='created'>Post um anúncio</Link>
+                                    <Link to="/buynow_front_olx_api/signin" className='created'>Post um anúncio</Link>
                                 </li>
                             </>
                         )}

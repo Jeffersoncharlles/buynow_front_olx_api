@@ -43,13 +43,13 @@ export const ItemPage = () => {
         <>
             <BreadCrumb>
                 Voce está aqui:
-                <Link to='/'>Home</Link>
+                <Link to='/buynow_front_olx_api/'>Home</Link>
                 /
-                <Link to={`/ads?region=${adItem?.stateId.name}`}>{adItem?.stateId.name}</Link>
+                <Link to={`/buynow_front_olx_api/ads?region=${adItem?.stateId.name}`}>{adItem?.stateId.name}</Link>
                 /
-                <Link to={`/ads?region=${adItem?.stateId.name}&cat=${adItem?.categoryId.slug}`}>{adItem?.categoryId.name}</Link>
+                <Link to={`/buynow_front_olx_api/ads?region=${adItem?.stateId.name}&cat=${adItem?.categoryId.slug}`}>{adItem?.categoryId.name}</Link>
                 /
-                <Link to={`/ad/${adItem?._id}`}>{adItem?.title}</Link>
+                <Link to={`/buynow_front_olx_api/ad/${adItem?._id}`}>{adItem?.title}</Link>
             </BreadCrumb>
             <Container>
                 <div className="LeftSide">

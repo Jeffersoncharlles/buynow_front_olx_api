@@ -14,17 +14,17 @@ export const Routers = () => {
 
     return (
         <Routes>
-            <Route caseSensitive path="/" element={<Home />} />
-            <Route caseSensitive path="/signin" element={<SignIn />} />
-            <Route caseSensitive path="/signup" element={<SignUp />} />
-            <Route caseSensitive path="/ad/:id" element={<ItemPage />} />
-            <Route caseSensitive path="/ads" element={<Ads />} />
-            <Route caseSensitive path='/post-an-ad' element={
+            <Route caseSensitive path="/buynow_front_olx_api" element={<Home />} />
+            <Route caseSensitive path="/buynow_front_olx_api/signin" element={<SignIn />} />
+            <Route caseSensitive path="/buynow_front_olx_api/signup" element={<SignUp />} />
+            <Route caseSensitive path="/buynow_front_olx_api/ad/:id" element={<ItemPage />} />
+            <Route caseSensitive path="/buynow_front_olx_api/ads" element={<Ads />} />
+            <Route caseSensitive path='/buynow_front_olx_api/post-an-ad' element={
                 <RequireAuth>
                     <CreatedAd />
                 </RequireAuth>
             } />
-            <Route caseSensitive path='/profile' element={
+            <Route caseSensitive path='/buynow_front_olx_api/profile' element={
                 <RequireAuth>
                     <Profile />
                 </RequireAuth>

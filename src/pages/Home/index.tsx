@@ -17,7 +17,7 @@ export const Home = () => {
                 <Container>
                     <SearchBox>
 
-                        <form method='get' action='/ads'>
+                        <form method='get' action='/buynow_front_olx_api/ads'>
                             <input type="text" name='q' placeholder='search now' />
                             <select name="region">
                                 <option></option>
@@ -32,7 +32,7 @@ export const Home = () => {
                     <CategoryList>
 
                         {categories.map((c) => (
-                            <Link key={c._id} to={`/ads?cat=${c.slug}`} className={`categoryItem  ${c.slug}`}>
+                            <Link key={c._id} to={`/buynow_front_olx_api/ads?cat=${c.slug}`} className={`categoryItem  ${c.slug}`}>
                                 <img src={c.img} alt={c.name} />
                                 <span>{c.name}</span>
                             </Link>
@@ -49,7 +49,7 @@ export const Home = () => {
                         <CardItem key={index} data={item} />
                     ))}
                 </div>
-                <Link to="/ads" className='seeAllLink'>View all</Link>
+                <Link to="/buynow_front_olx_api/ads" className='seeAllLink'>View all</Link>
 
                 <hr />
 

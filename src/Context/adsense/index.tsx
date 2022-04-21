@@ -100,7 +100,7 @@ export const AdSenseProvider = ({ children }: IAdSense) => {
         try {
             const { data } = await api.post('/ad/add', params)
             if (data) {
-                navigate(`/ad/${data._id}`)
+                navigate(`/buynow_front_olx_api/ad/${data._id}`)
             }
         } catch (error) {
 

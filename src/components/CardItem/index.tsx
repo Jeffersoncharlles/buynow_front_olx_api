@@ -24,7 +24,7 @@ export const CardItem = ({ data }: ICardItem) => {
 
     return (
         <Container>
-            <Link to={`/ad/${data?.id}`}>
+            <Link to={`/buynow_front_olx_api/ad/${data?.id}`}>
                 <ItemImage>
                     <img src={data?.image ? data?.image : `https://buynowapiolx.herokuapp.com/public/default.jpg`} alt={data?.title} />
                 </ItemImage>
