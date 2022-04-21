@@ -19,9 +19,9 @@ declare module 'react-slideshow-image' {
         duration?: number,
         transitionDuration?: number,
         defaultIndex?: number,
-        indicators?: boolean | function,
-        prevArrow?: object | function,
-        nextArrow?: object | function,
+        indicators?: boolean
+        prevArrow?: object
+        nextArrow?: object
         arrows?: boolean,
         autoplay?: boolean,
         infinite?: boolean,
