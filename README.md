@@ -17,7 +17,7 @@ buy now is front end  project olx api created for me
 </h1>
 
 ## PREVIEW
-<a href="...">BuyNow</a>
+<a href="https://jeffersoncharlles.github.io/buynow_front_olx_api/">BuyNow</a>
 
 
 ### Premium Partners
